@@ -7,8 +7,7 @@ import com.thehutgroup.accelerator.connectn.player.Player;
 
 public class MakeJarNotWarConnectFour_v1 extends Player {
   public MakeJarNotWarConnectFour_v1(Counter counter) {
-    //TODO: fill in your name here
-    super(counter, MakeJarNotWarConnectFour_v1.class.getName());
+    super(counter, "Make Jar--Not War -Hafiz and Victor");
   }
 
   @Override
