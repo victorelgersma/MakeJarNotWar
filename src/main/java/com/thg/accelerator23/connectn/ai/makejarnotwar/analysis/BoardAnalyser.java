@@ -1,10 +1,10 @@
-package com.thehutgroup.accelerator.connectn.analysis;
+package com.thg.accelerator23.connectn.ai.makejarnotwar.analysis;
 
-import com.thehutgroup.accelerator.connectn.model.Line;
 import com.thehutgroup.accelerator.connectn.player.Board;
 import com.thehutgroup.accelerator.connectn.player.Counter;
 import com.thehutgroup.accelerator.connectn.player.GameConfig;
 import com.thehutgroup.accelerator.connectn.player.Position;
+import com.thg.accelerator23.connectn.ai.makejarnotwar.model.Line;
 
 import java.util.ArrayList;
 import java.util.HashMap;
