@@ -6,6 +6,9 @@ import com.thehutgroup.accelerator.connectn.player.Player;
 import com.thg.accelerator23.connectn.ai.makejarnotwar.analysis.BoardAnalyser;
 import com.thg.accelerator23.connectn.ai.makejarnotwar.analysis.GameState;
 
+import static com.thehutgroup.accelerator.connectn.player.Counter.O;
+import static com.thehutgroup.accelerator.connectn.player.Counter.X;
+
 public class MakeJarNotWarConnectFour_v1 extends Player {
 
   public MakeJarNotWarConnectFour_v1(Counter counter) {
@@ -16,31 +19,39 @@ public class MakeJarNotWarConnectFour_v1 extends Player {
   public int makeMove(Board board) {
     BoardAnalyser boardAnalyser = new BoardAnalyser(board.getConfig());
     int width = board.getConfig().getWidth();
-    int winningMove = findWinningMove(board, boardAnalyser);
+    Counter ourCounter = getCounter();
+    Counter opponentCounter = getCounter() == X ? O : X;
+
+    int winningMove = findWinningMove(ourCounter, board, boardAnalyser);
+
     if (winningMove != -1) {
       return (winningMove);
     } else {
-      return getRandomNumber(0, width);
+      int moveWhichBlocksOpponent = findWinningMove(opponentCounter, board, boardAnalyser);
+      if (moveWhichBlocksOpponent != -1){
+        return moveWhichBlocksOpponent;
+      } else {
+        return getRandomNumber(0, width);
+      }
     }
   }
 
   // checks whether move will immediately win the game for our Counter
-  private int findWinningMove(Board board, BoardAnalyser boardAnalyser) {
+  private int findWinningMove(Counter counter, Board board, BoardAnalyser boardAnalyser) {
     for (int col = 0; col < board.getConfig().getWidth(); col++ ) {
-      if (isWinningMove(board, col, boardAnalyser)) {
+      if (isWinningMove(counter, col, board, boardAnalyser)) {
         return col;
       }
     }
     return -1;
   }
 
-  private boolean isWinningMove(Board board, int col, BoardAnalyser boardAnalyser) {
+  private boolean isWinningMove(Counter counter, int col, Board board, BoardAnalyser boardAnalyser) {
     try {
-      Board newBoard = new Board(board, col, getCounter());
+      Board newBoard = new Board(board, col, counter);
       GameState gameState = boardAnalyser.calculateGameState(newBoard);
       Counter winner = gameState.getWinner();
-      Counter ourCounter = getCounter();
-      if (winner == ourCounter) {
+      if (winner == counter) {
         return true;
       } else {
         return false;
