@@ -25,19 +25,22 @@ class MakeJarNotWarConnectFour_v1Test {
         // Arrange
         int width = 5;
         int height = 5;
-        Counter[][] counters = new Counter[width][height];
-        counters[4] = new Counter[] {null, null, null, null, null};
-        counters[3] = new Counter[] {null,    X, null, null, null};
-        counters[2] = new Counter[] {null,    O, null, null, null};
-        counters[1] = new Counter[] {null,    X, null,    X, null};
-        counters[0] = new Counter[] {null,    O,    O,    X, null};
-        counters = rotateBoard(counters);
+        MakeJarNotWarConnectFour_v1 player = new MakeJarNotWarConnectFour_v1(O);
 
+        Counter[][] counters = new Counter[width][height];
+        counters[4] = new Counter[] {null,    null, null, null, null};
+        counters[3] = new Counter[] {null,    null, null, null, null};
+        counters[2] = new Counter[] {null,    O,    null, null, null};
+        counters[1] = new Counter[] {null,    O,    null,    X, null};
+        counters[0] = new Counter[] {null,    X,    O,       X, null};
+        counters = rotateBoard(counters);
         Board board = new Board(counters, new GameConfig(width,height,3));
-        MakeJarNotWarConnectFour_v1 player = new MakeJarNotWarConnectFour_v1(X);
-        assertEquals(3, player.makeMove(board));
+        int chosenMove = player.makeMove(board);
+
+        assertEquals(1, chosenMove);
     }
 
+    // utility method in order to convert human readable Counter to an acceptable counter for the GameConfig class
     private Counter[][] rotateBoard(Counter[][] board) {
         Counter[][] newBoard = new Counter[board[0].length][board.length];
         for (int i = 0; i < board[0].length; i++) {
@@ -46,10 +49,5 @@ class MakeJarNotWarConnectFour_v1Test {
             }
         }
         return newBoard;
-    }
-
-    @Test
-    void printConfig() {
-
     }
 }
