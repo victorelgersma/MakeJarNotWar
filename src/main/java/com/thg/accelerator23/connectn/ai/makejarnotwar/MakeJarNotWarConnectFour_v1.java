@@ -18,7 +18,9 @@ public class MakeJarNotWarConnectFour_v1 extends Player {
   @Override
   public int makeMove(Board board) {
     BoardAnalyser boardAnalyser = new BoardAnalyser(board.getConfig());
+
     int width = board.getConfig().getWidth();
+
     Counter ourCounter = getCounter();
     Counter opponentCounter = getCounter() == X ? O : X;
 
@@ -51,11 +53,7 @@ public class MakeJarNotWarConnectFour_v1 extends Player {
       Board newBoard = new Board(board, col, counter);
       GameState gameState = boardAnalyser.calculateGameState(newBoard);
       Counter winner = gameState.getWinner();
-      if (winner == counter) {
-        return true;
-      } else {
-        return false;
-      }
+      return winner == counter;
     } catch (InvalidMoveException e) {
       return false;
     }

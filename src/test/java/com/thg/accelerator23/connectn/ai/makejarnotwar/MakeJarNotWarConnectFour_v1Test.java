@@ -10,13 +10,13 @@ import static com.thehutgroup.accelerator.connectn.player.Counter.X;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MakeJarNotWarConnectFour_v1Test {
-    private Board testBoard5_by_4 = new Board(new GameConfig(3,3,3));
+    private Board testboard_3_by_3 = new Board(new GameConfig(3,3,3));
     private MakeJarNotWarConnectFour_v1 ai = new MakeJarNotWarConnectFour_v1(Counter.O);
 
     @Test
     void choosesRandomInt() {
-        int chosenInt = ai.makeMove(testBoard5_by_4);
-        assertTrue(chosenInt >= 0 && chosenInt <= 9);
+        int chosenInt = ai.makeMove(testboard_3_by_3);
+        assertTrue(chosenInt >= 0 && chosenInt <= 2);
     }
 
     @Test
