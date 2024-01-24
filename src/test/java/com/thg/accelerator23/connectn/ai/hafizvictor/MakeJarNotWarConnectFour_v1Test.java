@@ -109,6 +109,30 @@ class MakeJarNotWarConnectFour_v1Test {
     }
 
 
+    // Not sure why this test is passing : I expect it to fail because there are no checks for available columns
+    @Test
+    void doesNotForfeitTheGameByPlayingInACompletedColumn() {
+        // Arrange
+        int width = 5;
+        int height = 5;
+        MakeJarNotWarConnectFour_v1 player = new MakeJarNotWarConnectFour_v1(O);
+
+        Counter[][] counters = new Counter[width][height];
+        counters[4] = new Counter[] {X,X,O,X,null};
+        counters[3] = new Counter[] {O,X,O,O,X};
+        counters[2] = new Counter[] {X,O,X,O,O};
+        counters[1] = new Counter[] {O,X,O,X,X};
+        counters[0] = new Counter[] {X,O,X,O,O};
+        counters = rotateBoard(counters);
+        Board board = new Board(counters, new GameConfig(width,height,4));
+
+        // Act
+        int chosenMove = player.makeMove(board);
+        // Assert
+        assertEquals(4, chosenMove);
+    }
+
+
     // utility method in order to convert human-readable Counter to an acceptable counter for the GameConfig class
     private Counter[][] rotateBoard(Counter[][] board) {
         Counter[][] newBoard = new Counter[board[0].length][board.length];
