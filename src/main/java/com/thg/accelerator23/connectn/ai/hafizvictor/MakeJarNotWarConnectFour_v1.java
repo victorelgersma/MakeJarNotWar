@@ -1,10 +1,10 @@
-package com.thg.accelerator23.connectn.ai.makejarnotwar;
+package com.thg.accelerator23.connectn.ai.hafizvictor;
 import com.thehutgroup.accelerator.connectn.player.Board;
 import com.thehutgroup.accelerator.connectn.player.Counter;
 import com.thehutgroup.accelerator.connectn.player.InvalidMoveException;
 import com.thehutgroup.accelerator.connectn.player.Player;
-import com.thg.accelerator23.connectn.ai.makejarnotwar.analysis.BoardAnalyser;
-import com.thg.accelerator23.connectn.ai.makejarnotwar.analysis.GameState;
+import com.thg.accelerator23.connectn.ai.hafizvictor.analysis.BoardAnalyser;
+import com.thg.accelerator23.connectn.ai.hafizvictor.analysis.GameState;
 
 import static com.thehutgroup.accelerator.connectn.player.Counter.O;
 import static com.thehutgroup.accelerator.connectn.player.Counter.X;

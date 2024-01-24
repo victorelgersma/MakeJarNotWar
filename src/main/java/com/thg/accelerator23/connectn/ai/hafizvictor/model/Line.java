@@ -1,4 +1,4 @@
-package com.thg.accelerator23.connectn.ai.makejarnotwar.model;
+package com.thg.accelerator23.connectn.ai.hafizvictor.model;
 
 import com.thehutgroup.accelerator.connectn.player.Counter;
 

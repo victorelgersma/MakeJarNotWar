@@ -1,4 +1,4 @@
-package com.thg.accelerator23.connectn.ai.makejarnotwar;
+package com.thg.accelerator23.connectn.ai.hafizvictor;
 
 import com.thehutgroup.accelerator.connectn.player.Board;
 import com.thehutgroup.accelerator.connectn.player.Counter;
@@ -107,6 +107,7 @@ class MakeJarNotWarConnectFour_v1Test {
         // Assert
         assertEquals(2, chosenMove);
     }
+
 
     // utility method in order to convert human-readable Counter to an acceptable counter for the GameConfig class
     private Counter[][] rotateBoard(Counter[][] board) {

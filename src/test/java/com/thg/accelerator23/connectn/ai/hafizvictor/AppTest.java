@@ -1,4 +1,4 @@
-package com.thg.accelerator23.connectn.ai.makejarnotwar;
+package com.thg.accelerator23.connectn.ai.hafizvictor;
 
 import org.junit.jupiter.api.Test;
 

@@ -1,4 +1,4 @@
-package com.thg.accelerator23.connectn.ai.makejarnotwar.analysis;
+package com.thg.accelerator23.connectn.ai.hafizvictor.analysis;
 
 import com.thehutgroup.accelerator.connectn.player.Counter;
 import com.thehutgroup.accelerator.connectn.player.GameConfig;
