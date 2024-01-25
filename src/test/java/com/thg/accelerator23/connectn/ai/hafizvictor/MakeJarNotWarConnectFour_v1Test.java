@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class MakeJarNotWarConnectFour_v1Test {
     private Board testboard_3_by_3 = new Board(new GameConfig(3,3,3));
-    private MakeJarNotWarConnectFour_v1 ai = new MakeJarNotWarConnectFour_v1(Counter.O);
+    private MakeJarNotWarConnectFour_DrunkenMaster2000 ai = new MakeJarNotWarConnectFour_DrunkenMaster2000(Counter.O);
 
     @Test
     void choosesRandomInt() {
@@ -24,7 +24,7 @@ class MakeJarNotWarConnectFour_v1Test {
         // Arrange
         int width = 5;
         int height = 5;
-        MakeJarNotWarConnectFour_v1 player = new MakeJarNotWarConnectFour_v1(O);
+        MakeJarNotWarConnectFour_DrunkenMaster2000 player = new MakeJarNotWarConnectFour_DrunkenMaster2000(O);
 
         Counter[][] counters = new Counter[width][height];
         counters[4] = new Counter[] {null,    null, null, null, null};
@@ -47,7 +47,7 @@ class MakeJarNotWarConnectFour_v1Test {
         // Arrange
         int width = 5;
         int height = 5;
-        MakeJarNotWarConnectFour_v1 player = new MakeJarNotWarConnectFour_v1(X);
+        MakeJarNotWarConnectFour_DrunkenMaster2000 player = new MakeJarNotWarConnectFour_DrunkenMaster2000(X);
 
         Counter[][] counters = new Counter[width][height];
         counters[4] = new Counter[] {null,    null, null, null, null};
@@ -69,7 +69,7 @@ class MakeJarNotWarConnectFour_v1Test {
         // Arrange
         int width = 5;
         int height = 5;
-        MakeJarNotWarConnectFour_v1 player = new MakeJarNotWarConnectFour_v1(X);
+        MakeJarNotWarConnectFour_DrunkenMaster2000 player = new MakeJarNotWarConnectFour_DrunkenMaster2000(X);
 
         Counter[][] counters = new Counter[width][height];
         counters[4] = new Counter[] {null,    null, null, null, null};
@@ -91,7 +91,7 @@ class MakeJarNotWarConnectFour_v1Test {
         // Arrange
         int width = 5;
         int height = 5;
-        MakeJarNotWarConnectFour_v1 player = new MakeJarNotWarConnectFour_v1(O);
+        MakeJarNotWarConnectFour_DrunkenMaster2000 player = new MakeJarNotWarConnectFour_DrunkenMaster2000(O);
 
         Counter[][] counters = new Counter[width][height];
         counters[4] = new Counter[] {null,    null, null, null, null};
@@ -115,10 +115,10 @@ class MakeJarNotWarConnectFour_v1Test {
         // Arrange
         int width = 5;
         int height = 5;
-        MakeJarNotWarConnectFour_v1 player = new MakeJarNotWarConnectFour_v1(O);
+        MakeJarNotWarConnectFour_DrunkenMaster2000 player = new MakeJarNotWarConnectFour_DrunkenMaster2000(O);
 
         Counter[][] counters = new Counter[width][height];
-        counters[4] = new Counter[] {X,X,O,X,null};
+        counters[4] = new Counter[] {X,X,null,X,O};
         counters[3] = new Counter[] {O,X,O,O,X};
         counters[2] = new Counter[] {X,O,X,O,O};
         counters[1] = new Counter[] {O,X,O,X,X};
@@ -129,9 +129,30 @@ class MakeJarNotWarConnectFour_v1Test {
         // Act
         int chosenMove = player.makeMove(board);
         // Assert
-        assertEquals(4, chosenMove);
+        assertEquals(2, chosenMove);
     }
 
+    @Test
+    void playsInTheMiddleAtTheBeginningOfTheGame() {
+        // Arrange
+        int width = 5;
+        int height = 5;
+        MakeJarNotWarConnectFour_DrunkenMaster2000 player = new MakeJarNotWarConnectFour_DrunkenMaster2000(O);
+
+        Counter[][] counters = new Counter[width][height];
+        counters[4] = new Counter[] {null,null,null,null,null};
+        counters[3] = new Counter[] {null,null,null,null,null};
+        counters[2] = new Counter[] {null,null,null,null,null};
+        counters[1] = new Counter[] {null,null,null,null,null};
+        counters[0] = new Counter[] {null,null,null,null,null};
+        counters = rotateBoard(counters);
+        Board board = new Board(counters, new GameConfig(width,height,4));
+
+        // Act
+        int chosenMove = player.makeMove(board);
+        // Assert
+        assertEquals(3, chosenMove);
+    }
 
     // utility method in order to convert human-readable Counter to an acceptable counter for the GameConfig class
     private Counter[][] rotateBoard(Counter[][] board) {

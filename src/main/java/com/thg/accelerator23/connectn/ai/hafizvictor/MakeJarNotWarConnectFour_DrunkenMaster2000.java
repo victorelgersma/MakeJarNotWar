@@ -6,23 +6,44 @@ import com.thehutgroup.accelerator.connectn.player.Player;
 import com.thg.accelerator23.connectn.ai.hafizvictor.analysis.BoardAnalyser;
 import com.thg.accelerator23.connectn.ai.hafizvictor.analysis.GameState;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 import static com.thehutgroup.accelerator.connectn.player.Counter.O;
 import static com.thehutgroup.accelerator.connectn.player.Counter.X;
 
-public class MakeJarNotWarConnectFour_v1 extends Player {
+public class MakeJarNotWarConnectFour_DrunkenMaster2000 extends Player {
+  private boolean started = false;
 
-  public MakeJarNotWarConnectFour_v1(Counter counter) {
+  public MakeJarNotWarConnectFour_DrunkenMaster2000(Counter counter) {
     super(counter, "Make Jar--Not War -Hafiz and Victor");
   }
 
   @Override
   public int makeMove(Board board) {
-    BoardAnalyser boardAnalyser = new BoardAnalyser(board.getConfig());
-
     int width = board.getConfig().getWidth();
+
+    BoardAnalyser boardAnalyser = new BoardAnalyser(board.getConfig());
+    Counter[][] counters = board.getCounterPlacements();
+
+    // check if it is the first move
+    if (!started) {
+      boolean isEmptyBoard = Arrays.stream(counters)
+              .flatMap(Arrays::stream)
+              .allMatch(Objects::isNull);
+
+      // if the board is empty, play first move
+      if (isEmptyBoard) {
+        started = true; // avoid running this code a second time
+        return 1 + width / 2;
+      }
+    }
 
     Counter ourCounter = getCounter();
     Counter opponentCounter = getCounter() == X ? O : X;
+
+    boardAnalyser.calculateGameState(board);
+
 
     int winningMove = findWinningMove(ourCounter, board, boardAnalyser);
 
