@@ -7,6 +7,7 @@ import com.thg.accelerator23.connectn.ai.hafizvictor.analysis.BoardAnalyser;
 import com.thg.accelerator23.connectn.ai.hafizvictor.analysis.GameState;
 
 import java.util.Arrays;
+import java.util.Map;
 import java.util.Objects;
 
 import static com.thehutgroup.accelerator.connectn.player.Counter.O;
@@ -14,6 +15,8 @@ import static com.thehutgroup.accelerator.connectn.player.Counter.X;
 
 public class MakeJarNotWarConnectFour_DrunkenMaster2000 extends Player {
   private boolean started = false;
+  private Map<Counter, Integer> maxInARowByCounter;
+  BoardAnalyser boardAnalyser;
 
   public MakeJarNotWarConnectFour_DrunkenMaster2000(Counter counter) {
     super(counter, "Make Jar--Not War -Hafiz and Victor");
@@ -23,18 +26,18 @@ public class MakeJarNotWarConnectFour_DrunkenMaster2000 extends Player {
   public int makeMove(Board board) {
     int width = board.getConfig().getWidth();
 
-    BoardAnalyser boardAnalyser = new BoardAnalyser(board.getConfig());
-    Counter[][] counters = board.getCounterPlacements();
-
     // check if it is the first move
     if (!started) {
+
+      boardAnalyser = new BoardAnalyser(board.getConfig());
+      Counter[][] counters = board.getCounterPlacements();
       boolean isEmptyBoard = Arrays.stream(counters)
               .flatMap(Arrays::stream)
               .allMatch(Objects::isNull);
 
       // if the board is empty, play first move
       if (isEmptyBoard) {
-        started = true; // avoid running this code a second time
+        started = true; // avoid running this code every more
         return (width / 2) - 1;
       }
     }
@@ -42,39 +45,74 @@ public class MakeJarNotWarConnectFour_DrunkenMaster2000 extends Player {
     Counter ourCounter = getCounter();
     Counter opponentCounter = getCounter() == X ? O : X;
 
-    boardAnalyser.calculateGameState(board);
+    GameState gameState = boardAnalyser.calculateGameState(board);
+    maxInARowByCounter = gameState.getMaxInARowByCounter();
 
-
-    int winningMove = findWinningMove(ourCounter, board, boardAnalyser);
-
+    int winningMove = findMoveThatWinsTheGameFor(ourCounter, board);
     if (winningMove != -1) {
       return (winningMove);
     } else {
-      int moveWhichBlocksOpponent = findWinningMove(opponentCounter, board, boardAnalyser);
-      if (moveWhichBlocksOpponent != -1){
-        return moveWhichBlocksOpponent;
+      int moveWhichPreventsOpponentWinning = findMoveThatWinsTheGameFor(opponentCounter, board);
+      if (moveWhichPreventsOpponentWinning != -1){
+        return moveWhichPreventsOpponentWinning;
       } else {
-        return getRandomNumber(0, width);
+        int moveThatBlocksOpponentFromIncreasingLongestStreak = findIncrementingMove(opponentCounter, board);
+        if (moveThatBlocksOpponentFromIncreasingLongestStreak !=-1) {
+          return moveThatBlocksOpponentFromIncreasingLongestStreak;
+        } else {
+          int moveThatIncreasesOurLongestStreak = findIncrementingMove(ourCounter, board);
+          if (moveThatIncreasesOurLongestStreak !=-1) {
+            return moveThatIncreasesOurLongestStreak;
+          } else {
+            return getRandomNumber(0, width);
+          }
+        }
       }
     }
   }
 
-  // checks whether move will immediately win the game for our Counter
-  private int findWinningMove(Counter counter, Board board, BoardAnalyser boardAnalyser) {
-    for (int col = 0; col < board.getConfig().getWidth(); col++ ) {
-      if (isWinningMove(counter, col, board, boardAnalyser)) {
+  private int findIncrementingMove(Counter counter, Board board) {
+    int width = board.getConfig().getWidth();
+    for (int col = 0; col < width; col++) {
+      if (thisMoveIncrementsLongestStreakFor(counter, col, board)) {
         return col;
       }
     }
     return -1;
   }
 
-  private boolean isWinningMove(Counter counter, int col, Board board, BoardAnalyser boardAnalyser) {
+
+  // checks whether move will immediately win the game for our Counter
+  private int findMoveThatWinsTheGameFor(Counter counter, Board board) {
+    int width = board.getConfig().getWidth();
+    for (int col = 0; col < width; col++ ) {
+      if (isWinningMove(counter, col, board)) {
+        return col;
+      }
+    }
+    return -1;
+  }
+
+  private boolean isWinningMove(Counter counter, int col, Board board) {
     try {
       Board newBoard = new Board(board, col, counter);
       GameState gameState = boardAnalyser.calculateGameState(newBoard);
       Counter winner = gameState.getWinner();
       return winner == counter;
+    } catch (InvalidMoveException e) {
+      return false;
+    }
+  }
+
+  private boolean thisMoveIncrementsLongestStreakFor(Counter counter, int col, Board board) {
+    try {
+      Board newBoard = new Board(board, col, counter);
+      GameState gameState = boardAnalyser.calculateGameState(newBoard);
+      if (gameState.getMaxInARowByCounter().get(counter) > maxInARowByCounter.get(counter)) {
+        return true;
+      } else {
+        return false;
+      }
     } catch (InvalidMoveException e) {
       return false;
     }
