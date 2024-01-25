@@ -35,7 +35,7 @@ public class MakeJarNotWarConnectFour_DrunkenMaster2000 extends Player {
       // if the board is empty, play first move
       if (isEmptyBoard) {
         started = true; // avoid running this code a second time
-        return 1 + width / 2;
+        return (width / 2) - 1;
       }
     }
 

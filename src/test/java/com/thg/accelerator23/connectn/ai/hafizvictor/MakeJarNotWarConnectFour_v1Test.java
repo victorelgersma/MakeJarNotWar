@@ -135,23 +135,26 @@ class MakeJarNotWarConnectFour_v1Test {
     @Test
     void playsInTheMiddleAtTheBeginningOfTheGame() {
         // Arrange
-        int width = 5;
-        int height = 5;
+        int width = 10;
+        int height = 8;
         MakeJarNotWarConnectFour_DrunkenMaster2000 player = new MakeJarNotWarConnectFour_DrunkenMaster2000(O);
 
         Counter[][] counters = new Counter[width][height];
-        counters[4] = new Counter[] {null,null,null,null,null};
-        counters[3] = new Counter[] {null,null,null,null,null};
-        counters[2] = new Counter[] {null,null,null,null,null};
-        counters[1] = new Counter[] {null,null,null,null,null};
-        counters[0] = new Counter[] {null,null,null,null,null};
+        counters[7] = new Counter[] {null,null,null,null,null, null, null, null};
+        counters[6] = new Counter[] {null,null,null,null,null, null, null, null};
+        counters[5] = new Counter[] {null,null,null,null,null, null, null, null};
+        counters[4] = new Counter[] {null,null,null,null,null, null, null, null};
+        counters[3] = new Counter[] {null,null,null,null,null, null, null, null};
+        counters[2] = new Counter[] {null,null,null,null,null, null, null, null};
+        counters[1] = new Counter[] {null,null,null,null,null, null, null, null};
+        counters[0] = new Counter[] {null,null,null,null,null, null, null, null};
         counters = rotateBoard(counters);
         Board board = new Board(counters, new GameConfig(width,height,4));
 
         // Act
         int chosenMove = player.makeMove(board);
         // Assert
-        assertEquals(3, chosenMove);
+        assertEquals(4, chosenMove);
     }
 
     // utility method in order to convert human-readable Counter to an acceptable counter for the GameConfig class
